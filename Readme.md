@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Сергей Носов](https://up.htmlacademy.ru/ecmascript/10/user/811883).
-* Наставник: `Неизвестно`.
+* Наставник: [Семён Якушев] (https://htmlacademy.ru/profile/id1118791).
 
 ---
 
