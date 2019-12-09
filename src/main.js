@@ -5,6 +5,7 @@ import {createFilterTemplate} from './components/filter.js';
 import {createNavigationTemplate} from './components/navigation.js';
 import {createProfileTemplate} from './components/profile.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
+import {generateFilmCards} from './mock/film-card.js';
 
 const MAIN_FILMS_COUNT = 5;
 const POPULAR_FILMS_COUNT = 2;
@@ -23,17 +24,17 @@ renderDOMElement(mainElement, createBoardTemplate());
 
 const filmsListAllElement = mainElement.querySelector(`.films-list`);
 const filmsListElements = mainElement.querySelectorAll(`.films-list__container`);
+
+const filmCards = generateFilmCards(15);
 filmsListElements.forEach(
     (element) => {
       if (element.parentNode.classList.contains(`films-list`)) {
-        const mainFilms = new Array(MAIN_FILMS_COUNT);
-        mainFilms.fill(``).forEach(
-            () => renderDOMElement(element, createFilmCardTemplate())
+        filmCards.forEach(
+            (filmCard) => renderDOMElement(element, createFilmCardTemplate(filmCard))
         );
       } else if (element.parentNode.classList.contains(`films-list--extra`)) {
-        const mainFilms = new Array(POPULAR_FILMS_COUNT);
-        mainFilms.fill(``).forEach(
-            () => renderDOMElement(element, createFilmCardTemplate())
+        filmCards.fill(``).forEach(
+            (filmCard) => renderDOMElement(element, createFilmCardTemplate(filmCard))
         );
       }
     }
