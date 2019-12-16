@@ -7,9 +7,6 @@ import {createProfileTemplate} from './components/profile.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {generateFilmCards} from './mock/film-card.js';
 
-const MAIN_FILMS_COUNT = 5;
-const POPULAR_FILMS_COUNT = 2;
-
 const renderDOMElement = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -33,7 +30,7 @@ filmsListElements.forEach(
             (filmCard) => renderDOMElement(element, createFilmCardTemplate(filmCard))
         );
       } else if (element.parentNode.classList.contains(`films-list--extra`)) {
-        filmCards.fill(``).forEach(
+        filmCards.forEach(
             (filmCard) => renderDOMElement(element, createFilmCardTemplate(filmCard))
         );
       }
@@ -41,4 +38,4 @@ filmsListElements.forEach(
 );
 
 renderDOMElement(filmsListAllElement, createShowMoreButtonTemplate());
-renderDOMElement(document.body, createFilmPopupTemplate());
+renderDOMElement(document.body, createFilmPopupTemplate(filmCards[0]));
