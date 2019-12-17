@@ -1,7 +1,7 @@
 const Month = [`января`, `февраля`, `марта`, `апреля`, `мая`, `июня`, `июля`, `августа`, `сентября`, `октября`, `ноября`, `декабря`];
 
 export const createFilmPopupTemplate = (filmCard) => {
-  const {filmCardTitle, filmCardOriginalName, filmCardRating, filmCardProducer, filmCardScreenwriter, filmCardActor, filmCardDate, filmCardDurationHours, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardCountry, filmCardDescription, filmCardAgeRating, filmCardComment} = filmCard;
+  const {filmCardTitle, filmCardOriginalName, filmCardRating, filmCardUserRating, filmCardProducer, filmCardScreenwriter, filmCardActor, filmCardDate, filmCardDurationHours, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardCountry, filmCardDescription, filmCardAgeRating, filmCardComment} = filmCard;
 
   const filmDetailsGenre = filmCardGenre.map((element) => {
     return `<span class="film-details__genre">${element}</span>`;
@@ -24,6 +24,8 @@ export const createFilmPopupTemplate = (filmCard) => {
       </li>`
     );
   });
+
+  const userRating = filmCardUserRating ? `Ваша оценка ${filmCardUserRating}` : ``;
 
   return (
     `<section class="film-details">
@@ -48,6 +50,7 @@ export const createFilmPopupTemplate = (filmCard) => {
 
                 <div class="film-details__rating">
                   <p class="film-details__total-rating">${filmCardRating}</p>
+                  <p class="film-details__user-rating">${userRating}</p>
                 </div>
               </div>
 

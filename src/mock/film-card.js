@@ -90,11 +90,12 @@ const generateFilmCard = () => {
       commentDate: getRandomArrayItem(UserCommentDates)
     };
   });
+  const filmCardUserRating = Math.random() > 0.5 ? getRandomIntegerNumber(1, 9) : 0;
   return {
     filmCardTitle: filmName,
     filmCardOriginalName: filmOriginalName,
     filmCardRating: getRandomIntegerNumber(0, 10),
-    filmCardUserRating: getRandomIntegerNumber(0, 10),
+    filmCardUserRating,
     filmCardProducer: getRandomArrayItem(producers),
     filmCardScreenwriter: shuffle(screenwriters).slice(0, getRandomIntegerNumber(1, 2)).join(`,\n`),
     filmCardActor: shuffle(actors).slice(0, getRandomIntegerNumber(1, 4)).join(`,\n`),
