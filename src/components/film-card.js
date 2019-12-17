@@ -9,7 +9,7 @@ const allFilmCards = (filmCards) => {
         <p class="film-card__info">
           <span class="film-card__year">${filmCardDate.getFullYear()}</span>
           <span class="film-card__duration">${filmCardDurationHours}h ${filmCardDurationMinutes}m</span>
-          <span class="film-card__genre">${filmCardGenre.join('\n')}</span>
+          <span class="film-card__genre">${filmCardGenre.join(`\n`)}</span>
         </p>
         <img src="${filmCardPoster}" alt="" class="film-card__poster">
         <p class="film-card__description">${filmCardDescription}</p>
@@ -26,7 +26,7 @@ const allFilmCards = (filmCards) => {
 
 const createFilmCardTemplate = (filmCards) => {
   return (
-    `${allFilmCards(filmCards).join('\n')`
+    `${allFilmCards(filmCards).join(`\n`)}`
   );
 };
 
@@ -35,7 +35,7 @@ const createFilmCardExtraTemplate = (filmCards, title) => {
     `<section class="films-list--extra">
       <h2 class="films-list__title">${title}</h2>
       <div class="films-list__container">
-        ${allFilmCards(filmCards).join('\n')}
+        ${allFilmCards(filmCards).join(`\n`)}
       </div>
     </section>`
   );

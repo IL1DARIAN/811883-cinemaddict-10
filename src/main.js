@@ -31,7 +31,7 @@ const filmsListAllElement = filmsListElement.querySelector(`.films-list`);
 const allFilmsContainer = filmsListAllElement.querySelector(`.films-list__container`);
 let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-renderDOMElement (allFilmsContainer, createFilmCardTemplate(filmCards.slice(0, showingTasksCount)));
+renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmCards.slice(0, showingTasksCount)));
 
 renderDOMElement(filmsListAllElement, createShowMoreButtonTemplate());
 
@@ -41,7 +41,7 @@ showMoreButton.addEventListener(`click`, () => {
   const prevTasksCount = showingTasksCount;
   showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
-  renderDOMElement (filmsListElement, createFilmCardTemplate(filmCards.slice(prevTasksCount, showingTasksCount)));
+  renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmCards.slice(prevTasksCount, showingTasksCount)));
 
   if (showingTasksCount >= filmCards.length) {
     showMoreButton.remove();
@@ -60,8 +60,8 @@ const mostComentedFilms = (array) => {
   });
 };
 
-renderDOMElement (filmsListElement, createFilmCardExtraTemplate(topRatedFilms(filmCards).slice(0, 2), `Top rated`));
-renderDOMElement (filmsListElement, createFilmCardExtraTemplate(mostComentedFilms(filmCards).slice(0, 2), `Most comented`));
+renderDOMElement(filmsListElement, createFilmCardExtraTemplate(topRatedFilms(filmCards).slice(0, 2), `Top rated`));
+renderDOMElement(filmsListElement, createFilmCardExtraTemplate(mostComentedFilms(filmCards).slice(0, 2), `Most comented`));
 
 renderDOMElement(document.body, createFilmPopupTemplate(filmCards[0]));
 

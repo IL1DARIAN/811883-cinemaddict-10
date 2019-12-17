@@ -1,7 +1,7 @@
 export const createNavigationTemplate = (menuNames) => {
   const menuCountNames = menuNames.map((menuName) => {
     const {name, count} = menuName;
-    return `<a href="#${name.toLowerCase()}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>`
+    return `<a href="#${name.toLowerCase()}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>`;
   });
 
   return (
