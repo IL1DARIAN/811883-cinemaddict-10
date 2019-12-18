@@ -19,10 +19,10 @@ const renderDOMElement = (container, template, place = `beforeend`) => {
 const headerElement = document.querySelector(`.header`);
 renderDOMElement(headerElement, createProfileTemplate());
 
-const filmCards = generateFilmCards(TASK_COUNT);
+const filmsCards = generateFilmCards(TASK_COUNT);
 
 const mainElement = document.querySelector(`.main`);
-renderDOMElement(mainElement, createNavigationTemplate(generateMenu(filmCards)));
+renderDOMElement(mainElement, createNavigationTemplate(generateMenu(filmsCards)));
 renderDOMElement(mainElement, createFilterTemplate());
 renderDOMElement(mainElement, createBoardTemplate());
 
@@ -31,7 +31,7 @@ const filmsListAllElement = filmsListElement.querySelector(`.films-list`);
 const allFilmsContainer = filmsListAllElement.querySelector(`.films-list__container`);
 let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmCards.slice(0, showingTasksCount)));
+renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmsCards.slice(0, showingTasksCount)));
 
 renderDOMElement(filmsListAllElement, createShowMoreButtonTemplate());
 
@@ -41,29 +41,29 @@ showMoreButton.addEventListener(`click`, () => {
   const prevTasksCount = showingTasksCount;
   showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
-  renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmCards.slice(prevTasksCount, showingTasksCount)));
+  renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmsCards.slice(prevTasksCount, showingTasksCount)));
 
-  if (showingTasksCount >= filmCards.length) {
+  if (showingTasksCount >= filmsCards.length) {
     showMoreButton.remove();
   }
 });
 
-const topRatedFilms = (array) => {
-  return array.sort((a, b) => {
+const getTopRatedFilms = (array) => {
+  return [...array].sort((a, b) => {
     return b.filmCardRating - a.filmCardRating;
   });
 };
 
-const mostComentedFilms = (array) => {
-  return array.sort((a, b) => {
-    return b.filmCardComment.length - a.filmCardComment.length;
+const getMostComentedFilms = (array) => {
+  return [...array].sort((a, b) => {
+    return b.filmCardComments.length - a.filmCardComments.length;
   });
 };
 
-renderDOMElement(filmsListElement, createFilmCardExtraTemplate(topRatedFilms(filmCards).slice(0, 2), `Top rated`));
-renderDOMElement(filmsListElement, createFilmCardExtraTemplate(mostComentedFilms(filmCards).slice(0, 2), `Most comented`));
+renderDOMElement(filmsListElement, createFilmCardExtraTemplate(getTopRatedFilms(filmsCards).slice(0, 2), `Top rated`));
+renderDOMElement(filmsListElement, createFilmCardExtraTemplate(getMostComentedFilms(filmsCards).slice(0, 2), `Most comented`));
 
-renderDOMElement(document.body, createFilmPopupTemplate(filmCards[0]));
+renderDOMElement(document.body, createFilmPopupTemplate(filmsCards[0]));
 
 const allFilmCount = document.querySelector(`.footer__statistics`);
-allFilmCount.innerHTML = `<p>${filmCards.length} movies inside</p>`;
+allFilmCount.innerHTML = `<p>${filmsCards.length} movies inside</p>`;

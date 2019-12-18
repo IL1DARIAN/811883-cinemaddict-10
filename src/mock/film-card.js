@@ -82,7 +82,7 @@ const shuffle = (array) => {
 const generateFilmCard = () => {
   const {filmName, filmOriginalName} = getRandomArrayItem(FilmNames);
   const filmCardDate = new Date(getRandomIntegerNumber(1960, 2019), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 28));
-  const filmCardComment = new Array(getRandomIntegerNumber(0, 10)).fill(``).map(() => {
+  const filmCardComments = new Array(getRandomIntegerNumber(0, 10)).fill(``).map(() => {
     return {
       commentUserEmoji: getRandomArrayItem(UserEmojies),
       commentDescription: getRandomArrayItem(Description),
@@ -90,12 +90,18 @@ const generateFilmCard = () => {
       commentDate: getRandomArrayItem(UserCommentDates)
     };
   });
-  const filmCardUserRating = Math.random() > 0.5 ? getRandomIntegerNumber(1, 9) : 0;
+  const isWatchlist = Math.random() > 0.5 ? true : false;
+  const isHistory = Math.random() > 0.5 ? true : false;
+  const isFavorite = Math.random() > 0.5 ? true : false;
+  const filmCardUserRating = isHistory ? getRandomIntegerNumber(1, 9) : 0;
   return {
     filmCardTitle: filmName,
     filmCardOriginalName: filmOriginalName,
     filmCardRating: getRandomIntegerNumber(0, 10),
     filmCardUserRating,
+    isWatchlist,
+    isHistory,
+    isFavorite,
     filmCardProducer: getRandomArrayItem(producers),
     filmCardScreenwriter: shuffle(screenwriters).slice(0, getRandomIntegerNumber(1, 2)).join(`,\n`),
     filmCardActor: shuffle(actors).slice(0, getRandomIntegerNumber(1, 4)).join(`,\n`),
@@ -107,7 +113,7 @@ const generateFilmCard = () => {
     filmCardCountry: shuffle(countries).slice(0, getRandomIntegerNumber(1, 3)).join(`,\n`),
     filmCardDescription: shuffle(Description).slice(0, 3).join(`\n`),
     filmCardAgeRating: getRandomArrayItem(ageRating),
-    filmCardComment
+    filmCardComments
   };
 };
 

@@ -1,13 +1,13 @@
 const Month = [`января`, `февраля`, `марта`, `апреля`, `мая`, `июня`, `июля`, `августа`, `сентября`, `октября`, `ноября`, `декабря`];
 
 export const createFilmPopupTemplate = (filmCard) => {
-  const {filmCardTitle, filmCardOriginalName, filmCardRating, filmCardUserRating, filmCardProducer, filmCardScreenwriter, filmCardActor, filmCardDate, filmCardDurationHours, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardCountry, filmCardDescription, filmCardAgeRating, filmCardComment} = filmCard;
+  const {filmCardTitle, filmCardOriginalName, filmCardRating, isWatchlist, isHistory, isFavorite, filmCardUserRating, filmCardProducer, filmCardScreenwriter, filmCardActor, filmCardDate, filmCardDurationHours, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardCountry, filmCardDescription, filmCardAgeRating, filmCardComments} = filmCard;
 
   const filmDetailsGenre = filmCardGenre.map((element) => {
     return `<span class="film-details__genre">${element}</span>`;
   });
 
-  const commentList = filmCardComment.map((element) => {
+  const commentList = filmCardComments.map((element) => {
     return (
       `<li class="film-details__comment">
         <span class="film-details__comment-emoji">
@@ -94,20 +94,20 @@ export const createFilmPopupTemplate = (filmCard) => {
           </div>
 
           <section class="film-details__controls">
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isWatchlist ? `checked` : ``}>
             <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isHistory ? `checked` : ``}>
             <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? `checked` : ``}>
             <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
           </section>
         </div>
 
         <div class="form-details__bottom-container">
           <section class="film-details__comments-wrap">
-            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${filmCardComment.length}</span></h3>
+            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${filmCardComments.length}</span></h3>
 
             <ul class="film-details__comments-list">
               ${commentList.join(`\n`)}

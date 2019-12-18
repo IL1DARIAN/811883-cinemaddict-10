@@ -1,14 +1,14 @@
 const menuNames = [`Watchlist`, `History`, `Favorites`];
 
-export const generateMenu = (filmCards) => {
+export const generateMenu = (filmsCards) => {
   return menuNames.map((it) => {
     let count;
     if (it === `Watchlist`) {
-      count = filmCards.filter((filmCard) => filmCard.filmCardUserRating).length;
+      count = filmsCards.filter((filmCard) => filmCard.isWatchlist).length;
     } else if (it === `History`) {
-      count = filmCards.filter((filmCard) => filmCard.filmCardUserRating <= 6 && filmCard.filmCardUserRating > 0).length;
+      count = filmsCards.filter((filmCard) => filmCard.isHistory).length;
     } else if (it === `Favorites`) {
-      count = filmCards.filter((filmCard) => filmCard.filmCardUserRating > 6).length;
+      count = filmsCards.filter((filmCard) => filmCard.isFavorite).length;
     }
     return {
       name: it,
