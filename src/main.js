@@ -1,13 +1,16 @@
 import {createBoardTemplate} from './components/board.js';
-import {createFilmCardTemplate} from './components/film-card.js';
+import {createFilmCardTemplate, createFilmCardExtraTemplate} from './components/film-card.js';
 import {createFilmPopupTemplate} from './components/film-popup.js';
 import {createFilterTemplate} from './components/filter.js';
 import {createNavigationTemplate} from './components/navigation.js';
 import {createProfileTemplate} from './components/profile.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
+import {generateFilmCards} from './mock/film-card.js';
+import {generateMenu} from './mock/menu.js';
 
-const MAIN_FILMS_COUNT = 5;
-const POPULAR_FILMS_COUNT = 2;
+const TASK_COUNT = 15;
+const SHOWING_TASKS_COUNT_ON_START = 5;
+const SHOWING_TASKS_COUNT_BY_BUTTON = 5;
 
 const renderDOMElement = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -16,28 +19,51 @@ const renderDOMElement = (container, template, place = `beforeend`) => {
 const headerElement = document.querySelector(`.header`);
 renderDOMElement(headerElement, createProfileTemplate());
 
+const filmsCards = generateFilmCards(TASK_COUNT);
+
 const mainElement = document.querySelector(`.main`);
-renderDOMElement(mainElement, createNavigationTemplate());
+renderDOMElement(mainElement, createNavigationTemplate(generateMenu(filmsCards)));
 renderDOMElement(mainElement, createFilterTemplate());
 renderDOMElement(mainElement, createBoardTemplate());
 
-const filmsListAllElement = mainElement.querySelector(`.films-list`);
-const filmsListElements = mainElement.querySelectorAll(`.films-list__container`);
-filmsListElements.forEach(
-    (element) => {
-      if (element.parentNode.classList.contains(`films-list`)) {
-        const mainFilms = new Array(MAIN_FILMS_COUNT);
-        mainFilms.fill(``).forEach(
-            () => renderDOMElement(element, createFilmCardTemplate())
-        );
-      } else if (element.parentNode.classList.contains(`films-list--extra`)) {
-        const mainFilms = new Array(POPULAR_FILMS_COUNT);
-        mainFilms.fill(``).forEach(
-            () => renderDOMElement(element, createFilmCardTemplate())
-        );
-      }
-    }
-);
+const filmsListElement = mainElement.querySelector(`.films`);
+const filmsListAllElement = filmsListElement.querySelector(`.films-list`);
+const allFilmsContainer = filmsListAllElement.querySelector(`.films-list__container`);
+let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
+
+renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmsCards.slice(0, showingTasksCount)));
 
 renderDOMElement(filmsListAllElement, createShowMoreButtonTemplate());
-renderDOMElement(document.body, createFilmPopupTemplate());
+
+const showMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
+
+showMoreButton.addEventListener(`click`, () => {
+  const prevTasksCount = showingTasksCount;
+  showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
+
+  renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmsCards.slice(prevTasksCount, showingTasksCount)));
+
+  if (showingTasksCount >= filmsCards.length) {
+    showMoreButton.remove();
+  }
+});
+
+const getTopRatedFilms = (array) => {
+  return [...array].sort((a, b) => {
+    return b.filmCardRating - a.filmCardRating;
+  });
+};
+
+const getMostComentedFilms = (array) => {
+  return [...array].sort((a, b) => {
+    return b.filmCardComments.length - a.filmCardComments.length;
+  });
+};
+
+renderDOMElement(filmsListElement, createFilmCardExtraTemplate(getTopRatedFilms(filmsCards).slice(0, 2), `Top rated`));
+renderDOMElement(filmsListElement, createFilmCardExtraTemplate(getMostComentedFilms(filmsCards).slice(0, 2), `Most comented`));
+
+renderDOMElement(document.body, createFilmPopupTemplate(filmsCards[0]));
+
+const allFilmCount = document.querySelector(`.footer__statistics`);
+allFilmCount.innerHTML = `<p>${filmsCards.length} movies inside</p>`;
