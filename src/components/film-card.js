@@ -1,6 +1,6 @@
 const allFilmCards = (filmsCards) => {
   return filmsCards.map((filmCard) => {
-    const {filmCardTitle, filmCardRating, filmCardDate, filmCardDurationHours, isWatchlist, isHistory, isFavorite, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardDescription, filmCardComments} = filmCard;
+    const {filmCardTitle, filmCardRating, filmCardDate, filmCardDurationHours, isInWatchlist, isAlreadyWatched, isFavorite, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardDescription, filmCardComments} = filmCard;
 
     return (
       `<article class="film-card">
@@ -15,8 +15,8 @@ const allFilmCards = (filmsCards) => {
         <p class="film-card__description">${filmCardDescription}</p>
         <a class="film-card__comments">${filmCardComments.length} комментариев</a>
         <form class="film-card__controls">
-          <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isWatchlist ? `film-card__controls-item--active` : ``}">Add to watchlist</button>
-          <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isHistory ? `film-card__controls-item--active` : ``}">Mark as watched</button>
+          <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isInWatchlist ? `film-card__controls-item--active` : ``}">Add to watchlist</button>
+          <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isAlreadyWatched ? `film-card__controls-item--active` : ``}">Mark as watched</button>
           <button class="film-card__controls-item button film-card__controls-item--favorite ${isFavorite ? `film-card__controls-item--active` : ``}">Mark as favorite</button>
         </form>
       </article>`

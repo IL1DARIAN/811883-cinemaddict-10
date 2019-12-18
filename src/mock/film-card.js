@@ -90,17 +90,17 @@ const generateFilmCard = () => {
       commentDate: getRandomArrayItem(UserCommentDates)
     };
   });
-  const isWatchlist = Math.random() > 0.5 ? true : false;
-  const isHistory = Math.random() > 0.5 ? true : false;
+  const isInWatchlist = Math.random() > 0.5 ? true : false;
+  const isAlreadyWatched = Math.random() > 0.5 ? true : false;
   const isFavorite = Math.random() > 0.5 ? true : false;
-  const filmCardUserRating = isHistory ? getRandomIntegerNumber(1, 9) : 0;
+  const filmCardUserRating = isAlreadyWatched ? getRandomIntegerNumber(1, 9) : 0;
   return {
     filmCardTitle: filmName,
     filmCardOriginalName: filmOriginalName,
     filmCardRating: getRandomIntegerNumber(0, 10),
     filmCardUserRating,
-    isWatchlist,
-    isHistory,
+    isInWatchlist,
+    isAlreadyWatched,
     isFavorite,
     filmCardProducer: getRandomArrayItem(producers),
     filmCardScreenwriter: shuffle(screenwriters).slice(0, getRandomIntegerNumber(1, 2)).join(`,\n`),

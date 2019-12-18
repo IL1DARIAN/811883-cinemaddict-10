@@ -4,9 +4,9 @@ export const generateMenu = (filmsCards) => {
   return menuNames.map((it) => {
     let count;
     if (it === `Watchlist`) {
-      count = filmsCards.filter((filmCard) => filmCard.isWatchlist).length;
+      count = filmsCards.filter((filmCard) => filmCard.isInWatchlist).length;
     } else if (it === `History`) {
-      count = filmsCards.filter((filmCard) => filmCard.isHistory).length;
+      count = filmsCards.filter((filmCard) => filmCard.isAlreadyWatched).length;
     } else if (it === `Favorites`) {
       count = filmsCards.filter((filmCard) => filmCard.isFavorite).length;
     }
