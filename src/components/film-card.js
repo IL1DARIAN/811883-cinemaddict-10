@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const allFilmCards = (filmsCards) => {
   return filmsCards.map((filmCard) => {
     const {filmCardTitle, filmCardRating, filmCardDate, filmCardDurationHours, isInWatchlist, isAlreadyWatched, isFavorite, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardDescription, filmCardComments} = filmCard;
@@ -41,4 +43,38 @@ const createFilmCardExtraTemplate = (filmsCards, title) => {
   );
 };
 
-export {createFilmCardTemplate, createFilmCardExtraTemplate};
+export default class FilmsCards {
+  constructor(filmsCards, title) {
+    this._filmsCards = filmsCards;
+    this._title = title;
+    this._element = null;
+  }
+
+  getTemplateAll() {
+    return createFilmCardTemplate(this._filmsCards);
+  }
+
+  getTemplateExtra() {
+    return createFilmCardExtraTemplate(this._filmsCards, this._title);
+  }
+
+  getElementAll() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplateAll());
+    }
+
+    return this._element;
+  }
+
+  getElementExtra() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplateExtra());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

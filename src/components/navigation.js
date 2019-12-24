@@ -1,4 +1,6 @@
-export const createNavigationTemplate = (menuNames) => {
+import {createElement} from '../utils.js';
+
+const createNavigationTemplate = (menuNames) => {
   const menuCountNames = menuNames.map((menuName) => {
     const {name, count} = menuName;
     return `<a href="#${name.toLowerCase()}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>`;
@@ -12,3 +14,26 @@ export const createNavigationTemplate = (menuNames) => {
     </nav>`
   );
 };
+
+export default class SiteMenu {
+  constructor(menuNames) {
+    this._menuNames = menuNames;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createNavigationTemplate(this._menuNames);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,39 +1,37 @@
-import {createBoardTemplate} from './components/board.js';
-import {createFilmCardTemplate, createFilmCardExtraTemplate} from './components/film-card.js';
-import {createFilmPopupTemplate} from './components/film-popup.js';
-import {createFilterTemplate} from './components/filter.js';
-import {createNavigationTemplate} from './components/navigation.js';
-import {createProfileTemplate} from './components/profile.js';
-import {createShowMoreButtonTemplate} from './components/show-more-button.js';
+import SiteMenuComponent from './components/navigation.js';
+import BoardComponent from './components/board.js';
+import FiltersComponent from './components/filter.js';
+import ProfileComponent from './components/profile.js';
+import FilmsCardsComponent from './components/film-card.js';
+import ShowMoreButtonComponent from './components/show-more-button.js';
+import FilmPopupComponent from './components/film-popup.js';
+
 import {generateFilmCards} from './mock/film-card.js';
 import {generateMenu} from './mock/menu.js';
+import {renderDOMElement, RenderPosition} from './utils.js';
 
 const TASK_COUNT = 15;
 const SHOWING_TASKS_COUNT_ON_START = 5;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 5;
 
-const renderDOMElement = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
-
 const headerElement = document.querySelector(`.header`);
-renderDOMElement(headerElement, createProfileTemplate());
+renderDOMElement(headerElement, new ProfileComponent().getElement(), RenderPosition.BEFOREEND);
 
 const filmsCards = generateFilmCards(TASK_COUNT);
 
 const mainElement = document.querySelector(`.main`);
-renderDOMElement(mainElement, createNavigationTemplate(generateMenu(filmsCards)));
-renderDOMElement(mainElement, createFilterTemplate());
-renderDOMElement(mainElement, createBoardTemplate());
+renderDOMElement(mainElement, new SiteMenuComponent(generateMenu(filmsCards)).getElement(), RenderPosition.BEFOREEND);
+renderDOMElement(mainElement, new FiltersComponent().getElement(), RenderPosition.BEFOREEND);
+renderDOMElement(mainElement, new BoardComponent().getElement(), RenderPosition.BEFOREEND);
 
 const filmsListElement = mainElement.querySelector(`.films`);
 const filmsListAllElement = filmsListElement.querySelector(`.films-list`);
 const allFilmsContainer = filmsListAllElement.querySelector(`.films-list__container`);
 let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmsCards.slice(0, showingTasksCount)));
+renderDOMElement(allFilmsContainer, new FilmsCardsComponent(filmsCards.slice(0, showingTasksCount)).getElementAll(), RenderPosition.BEFOREEND);
 
-renderDOMElement(filmsListAllElement, createShowMoreButtonTemplate());
+renderDOMElement(filmsListAllElement, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
 
 const showMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
 
@@ -41,7 +39,7 @@ showMoreButton.addEventListener(`click`, () => {
   const prevTasksCount = showingTasksCount;
   showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
-  renderDOMElement(allFilmsContainer, createFilmCardTemplate(filmsCards.slice(prevTasksCount, showingTasksCount)));
+  renderDOMElement(allFilmsContainer, new FilmsCardsComponent(filmsCards.slice(prevTasksCount, showingTasksCount)).getElementAll(), RenderPosition.BEFOREEND);
 
   if (showingTasksCount >= filmsCards.length) {
     showMoreButton.remove();
@@ -60,10 +58,10 @@ const getMostComentedFilms = (array) => {
   });
 };
 
-renderDOMElement(filmsListElement, createFilmCardExtraTemplate(getTopRatedFilms(filmsCards).slice(0, 2), `Top rated`));
-renderDOMElement(filmsListElement, createFilmCardExtraTemplate(getMostComentedFilms(filmsCards).slice(0, 2), `Most comented`));
+renderDOMElement(filmsListElement, new FilmsCardsComponent(getTopRatedFilms(filmsCards).slice(0, 2), `Top rated`).getElementExtra(), RenderPosition.BEFOREEND);
+renderDOMElement(filmsListElement, new FilmsCardsComponent(getMostComentedFilms(filmsCards).slice(0, 2), `Most comented`).getElementExtra(), RenderPosition.BEFOREEND);
 
-renderDOMElement(document.body, createFilmPopupTemplate(filmsCards[0]));
+renderDOMElement(document.body, new FilmPopupComponent(filmsCards[0]).getElement(), RenderPosition.BEFOREEND);
 
 const allFilmCount = document.querySelector(`.footer__statistics`);
 allFilmCount.innerHTML = `<p>${filmsCards.length} movies inside</p>`;

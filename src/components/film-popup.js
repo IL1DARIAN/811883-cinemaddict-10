@@ -1,6 +1,8 @@
+import {createElement} from '../utils.js';
+
 const Month = [`января`, `февраля`, `марта`, `апреля`, `мая`, `июня`, `июля`, `августа`, `сентября`, `октября`, `ноября`, `декабря`];
 
-export const createFilmPopupTemplate = (filmCard) => {
+const createFilmPopupTemplate = (filmCard) => {
   const {filmCardTitle, filmCardOriginalName, filmCardRating, isInWatchlist, isAlreadyWatched, isFavorite, filmCardUserRating, filmCardProducer, filmCardScreenwriter, filmCardActor, filmCardDate, filmCardDurationHours, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardCountry, filmCardDescription, filmCardAgeRating, filmCardComments} = filmCard;
 
   const filmDetailsGenre = filmCardGenre.map((element) => {
@@ -148,3 +150,26 @@ export const createFilmPopupTemplate = (filmCard) => {
     </section>`
   );
 };
+
+export default class FilmPopup {
+  constructor(filmCard) {
+    this._filmCard = filmCard;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmPopupTemplate(this._filmCard);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
