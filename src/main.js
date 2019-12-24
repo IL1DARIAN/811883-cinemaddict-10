@@ -19,9 +19,21 @@ const headerElement = document.querySelector(`.header`);
 renderDOMElement(headerElement, new ProfileComponent().getElement(), RenderPosition.BEFOREEND);
 
 const filmsCards = generateFilmCards(TASK_COUNT);
-const filmsCardsComponents = filmsCards.map((filmCard) => {
-  return new FilmCardComponent(filmCard);
-});
+const renderFilmCard = (filmCard) => {
+  const filmCardCopy = new FilmCardComponent(filmCard);
+  const filmCardPopup = new FilmPopupComponent(filmCard);
+
+  filmCardCopy.getElement().addEventListener(`click`, () => {
+    filmCardPopup.removeElement();
+    renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
+  });
+
+  filmCardPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
+    filmCardPopup.removeElement();
+  });
+
+  renderDOMElement(allFilmsContainer, filmCardCopy.getElement(), RenderPosition.BEFOREEND);
+};
 
 const mainElement = document.querySelector(`.main`);
 renderDOMElement(mainElement, new SiteMenuComponent(generateMenu(filmsCards)).getElement(), RenderPosition.BEFOREEND);
@@ -33,8 +45,8 @@ const filmsListAllElement = filmsListElement.querySelector(`.films-list`);
 const allFilmsContainer = filmsListAllElement.querySelector(`.films-list__container`);
 let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-filmsCardsComponents.slice(0, showingTasksCount).map((DOMElement) => {
-  renderDOMElement(allFilmsContainer, DOMElement.getElement(), RenderPosition.BEFOREEND);
+filmsCards.slice(0, showingTasksCount).map((filmCard) => {
+  renderFilmCard(filmCard);
 });
 
 renderDOMElement(filmsListAllElement, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
@@ -45,8 +57,8 @@ showMoreButton.addEventListener(`click`, () => {
   const prevTasksCount = showingTasksCount;
   showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
-  filmsCardsComponents.slice(prevTasksCount, showingTasksCount).map((DOMElement) => {
-    renderDOMElement(allFilmsContainer, DOMElement.getElement(), RenderPosition.BEFOREEND);
+  filmsCards.slice(prevTasksCount, showingTasksCount).map((filmCard) => {
+    renderFilmCard(filmCard);
   });
 
   if (showingTasksCount >= filmsCards.length) {
@@ -91,7 +103,7 @@ mostComentedFilmsCardsComponents.map((DOMElement) => {
   renderDOMElement(mostComentedElement, DOMElement.getElement(), RenderPosition.BEFOREEND);
 });
 
-renderDOMElement(document.body, new FilmPopupComponent(filmsCards[0]).getElement(), RenderPosition.BEFOREEND);
+//renderDOMElement(document.body, new FilmPopupComponent(filmsCards[0]).getElement(), RenderPosition.BEFOREEND);
 
 const allFilmCount = document.querySelector(`.footer__statistics`);
 allFilmCount.innerHTML = `<p>${filmsCards.length} movies inside</p>`;
