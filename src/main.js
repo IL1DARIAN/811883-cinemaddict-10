@@ -23,11 +23,13 @@ const renderFilmCard = (filmCard) => {
   const filmCardCopy = new FilmCardComponent(filmCard);
   const filmCardPopup = new FilmPopupComponent(filmCard);
 
-  filmCardCopy.getElement().addEventListener(`click`, () => {
-    if (filmCardPopup.getElement()) {
-      filmCardPopup.getElement().remove();
+  filmCardCopy.getElement().addEventListener(`click`, (evt) => {
+    if (evt.target === filmCardCopy.getElement().querySelector(`.film-card__poster`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__title`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__comments`)) {
+      if (filmCardPopup.getElement()) {
+        filmCardPopup.getElement().remove();
+      }
+      renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
     }
-    renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
   });
 
   filmCardPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
@@ -98,11 +100,13 @@ const renderTopRatedCard = (filmCard) => {
   const filmCardCopy = new FilmCardComponent(filmCard);
   const filmCardPopup = new FilmPopupComponent(filmCard);
 
-  filmCardCopy.getElement().addEventListener(`click`, () => {
-    if (filmCardPopup.getElement()) {
-      filmCardPopup.getElement().remove();
+  filmCardCopy.getElement().addEventListener(`click`, (evt) => {
+    if (evt.target === filmCardCopy.getElement().querySelector(`.film-card__poster`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__title`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__comments`)) {
+      if (filmCardPopup.getElement()) {
+        filmCardPopup.getElement().remove();
+      }
+      renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
     }
-    renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
   });
 
   filmCardPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
@@ -120,11 +124,13 @@ const renderMostComentedCard = (filmCard) => {
   const filmCardCopy = new FilmCardComponent(filmCard);
   const filmCardPopup = new FilmPopupComponent(filmCard);
 
-  filmCardCopy.getElement().addEventListener(`click`, () => {
-    if (filmCardPopup.getElement()) {
-      filmCardPopup.getElement().remove();
+  filmCardCopy.getElement().addEventListener(`click`, (evt) => {
+    if (evt.target === filmCardCopy.getElement().querySelector(`.film-card__poster`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__title`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__comments`)) {
+      if (filmCardPopup.getElement()) {
+        filmCardPopup.getElement().remove();
+      }
+      renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
     }
-    renderDOMElement(document.body, filmCardPopup.getElement(), RenderPosition.BEFOREEND);
   });
 
   filmCardPopup.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
