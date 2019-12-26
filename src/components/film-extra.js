@@ -1,21 +1,22 @@
 import {createElement} from '../utils.js';
 
-const createProfileTemplate = () => {
+const createFilmCardExtraTemplate = (title) => {
   return (
-    `<section class="header__profile profile">
-      <p class="profile__rating">Movie Buff</p>
-      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
+    `<section class="films-list--extra">
+      <h2 class="films-list__title">${title}</h2>
+      <div class="films-list__container"></div>
     </section>`
   );
 };
 
-export default class Profile {
-  constructor() {
+export default class ExtraFilms {
+  constructor(title) {
+    this._title = title;
     this._element = null;
   }
 
   getTemplate() {
-    return createProfileTemplate();
+    return createFilmCardExtraTemplate(this._title);
   }
 
   getElement() {
