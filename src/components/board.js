@@ -1,35 +1,18 @@
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const createBoardTemplate = () => {
   return (
-    `<section class="films">
-      <section class="films-list">
-        <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-        <div class="films-list__container"></div>
-      </section>
-    </section>`
+    `<section class="board-controller"></section>`
   );
 
 };
 
-export default class Board {
+export default class Board extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return createBoardTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const createFilmCardTemplate = (filmCard) => {
   const {filmCardTitle, filmCardRating, filmCardDate, filmCardDurationHours, isInWatchlist, isAlreadyWatched, isFavorite, filmCardDurationMinutes, filmCardGenre, filmCardPoster, filmCardDescription, filmCardComments} = filmCard;
@@ -24,25 +24,18 @@ const createFilmCardTemplate = (filmCard) => {
   );
 };
 
-export default class FilmCardMain {
+export default class FilmCardMain extends AbstractComponent {
   constructor(filmCard) {
+    super();
+
     this._filmCard = filmCard;
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._filmCard);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setClickFilmCardHandler(handler) {
+    this.getElement().addEventListener(`click`, handler);
   }
 }

@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const createNavigationTemplate = (menuNames) => {
   const menuCountNames = menuNames.map((menuName) => {
@@ -15,25 +15,13 @@ const createNavigationTemplate = (menuNames) => {
   );
 };
 
-export default class SiteMenu {
+export default class SiteMenu extends AbstractComponent {
   constructor(menuNames) {
+    super();
     this._menuNames = menuNames;
-    this._element = null;
   }
 
   getTemplate() {
     return createNavigationTemplate(this._menuNames);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
