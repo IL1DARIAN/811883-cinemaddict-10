@@ -47,14 +47,13 @@ export default class BoardController {
   render(filmsCards) {
     const container = this._container.getElement();
     renderDOMElement(container, this._siteMenuComponent, RenderPosition.BEFOREEND);
-    if (filmsCards.length < 8) {
+    if (filmsCards.length === 0) {
       renderDOMElement(container, this._noFilmsComponent, RenderPosition.BEFOREEND);
       return;
     }
     renderDOMElement(container, this._sortingComponent, RenderPosition.BEFOREEND);
     renderDOMElement(container, this._filmsContainerComponent, RenderPosition.BEFOREEND);
 
-    const filmsListElement = document.querySelector(`.films`);
     const filmsListAllElement = this._filmsContainerComponent.getElement().querySelector(`.films-list`);
     const allFilmsContainer = this._filmsContainerComponent.getElement().querySelector(`.films-list__container`);
     let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
@@ -74,20 +73,20 @@ export default class BoardController {
         remove(this._showMoreButtonComponent);
       }
     });
-    const getTopRatedFilms = (array) => {
-      return [...array].sort((a, b) => {
-        return b.filmCardRating - a.filmCardRating;
+    const getTopRatedFilms = (films) => {
+      return [...films].sort((film1, film2) => {
+        return film2.filmCardRating - film1.filmCardRating;
       });
     };
 
-    const getMostComentedFilms = (array) => {
-      return [...array].sort((a, b) => {
-        return b.filmCardComments.length - a.filmCardComments.length;
+    const getMostComentedFilms = (films) => {
+      return [...films].sort((film1, film2) => {
+        return film2.filmCardComments.length - film1.filmCardComments.length;
       });
     };
 
-    renderDOMElement(filmsListElement, this._filmsExtraTopRated, RenderPosition.BEFOREEND);
-    renderDOMElement(filmsListElement, this._filmsExtraMostComented, RenderPosition.BEFOREEND);
+    renderDOMElement(this._filmsContainerComponent.getElement(), this._filmsExtraTopRated, RenderPosition.BEFOREEND);
+    renderDOMElement(this._filmsContainerComponent.getElement(), this._filmsExtraMostComented, RenderPosition.BEFOREEND);
 
     getTopRatedFilms(filmsCards).slice(0, 2).map((filmCard) => {
       renderFilmCard(filmCard, this._filmsExtraTopRated.getElement().querySelector(`.films-list__container`));
