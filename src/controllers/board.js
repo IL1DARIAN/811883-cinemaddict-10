@@ -100,7 +100,7 @@ export default class BoardController {
 
       switch (sortType) {
         case SortType.SORT_DATE:
-          sortedFilmsCards = filmsCards.slice().sort((a, b) => b.filmCardDate - a.FilmCardDate);
+          sortedFilmsCards = filmsCards.slice().sort((a, b) => b.filmCardDate - a.filmCardDate);
           break;
         case SortType.SORT_RATING:
           sortedFilmsCards = filmsCards.slice().sort((a, b) => b.filmCardRating - a.filmCardRating);
