@@ -15,6 +15,13 @@ const SHOWING_TASKS_COUNT_BY_BUTTON = 5;
 const renderFilmCard = (filmCard, filmsContainer) => {
   const filmCardCopy = new FilmCardComponent(filmCard);
   const filmCardPopup = new FilmPopupComponent(filmCard);
+  const escKeyDownHandler = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+    if (isEscKey) {
+      filmCardPopup.getElement().remove();
+      document.removeEventListener(`keydown`, escKeyDownHandler);
+    }
+  };
 
   filmCardCopy.setClickFilmCardHandler((evt) => {
     if (evt.target === filmCardCopy.getElement().querySelector(`.film-card__poster`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__title`) || evt.target === filmCardCopy.getElement().querySelector(`.film-card__comments`)) {
@@ -22,11 +29,13 @@ const renderFilmCard = (filmCard, filmsContainer) => {
         filmCardPopup.getElement().remove();
       }
       renderDOMElement(document.body, filmCardPopup, RenderPosition.BEFOREEND);
+      document.addEventListener(`keydown`, escKeyDownHandler);
     }
   });
 
   filmCardPopup.setClickCloseButtonHandler(() => {
     filmCardPopup.getElement().remove();
+    document.removeEventListener(`keydown`, escKeyDownHandler);
   });
 
   renderDOMElement(filmsContainer, filmCardCopy, RenderPosition.BEFOREEND);
@@ -60,7 +69,9 @@ export default class BoardController {
     filmsCards.slice(0, showingTasksCount).map((filmCard) => {
       renderFilmCard(filmCard, allFilmsContainer);
     });
-    renderDOMElement(filmsListAllElement, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+    if (showingTasksCount < filmsCards.length) {
+      renderDOMElement(filmsListAllElement, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+    }
     this._showMoreButtonComponent.setClickHandler(() => {
       const prevTasksCount = showingTasksCount;
       showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
