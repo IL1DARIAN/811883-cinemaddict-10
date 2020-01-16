@@ -8,6 +8,7 @@ import SiteMenuComponent from '../components/navigation.js';
 import FiltersComponent, {SortType} from '../components/filter.js';
 import {renderDOMElement, RenderPosition, remove} from '../utils.js';
 import {generateMenu} from '../mock/menu.js';
+import FilmCardController from './movie-controller.js';
 
 const SHOWING_TASKS_COUNT_ON_START = 5;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 5;
@@ -43,7 +44,8 @@ const renderFilmCard = (filmCard, filmsContainer) => {
 
 const renderFilmsCards = (filmsCardsContainer, allFilmsCards) => {
   allFilmsCards.map((filmCard) => {
-    renderFilmCard(filmCard, filmsCardsContainer);
+    const filmCardController = new FilmCardController(filmsCardsContainer);
+    filmCardController.render(filmCard);
   });
 };
 
